@@ -51,7 +51,7 @@ Setup varies between controllers and software. This guide is to setup inputs for
 2. Delete all mappings for left Trackpad.
 3. Add a new `DPAD` mapping for the left Trackpad.
 4. Set `North` to `bbuttontouchleft`.
-5. Set `South` to `bbuttontouchleft`.
+5. Set `South` to `abuttontouchleft`.
 6. Click the checkbox to save the Trackpad mapping.
 7. Repeat steps 2-6 for the right trackpad (you may have to turn off `Mirror Mode`).
 
