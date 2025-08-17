@@ -71,10 +71,12 @@ public:
         static bool BTouchLeftDown = false;
         static bool ATouchRightDown = false;
         static bool BTouchRightDown = false;
+        static bool ThumbrestTouchLeftDown = false;
         static WORD ATouchLeftKey = '1';
         static WORD BTouchLeftKey = '2';
         static WORD ATouchRightKey = '3';
         static WORD BTouchRightKey = '4';
+        static WORD ThumbrestTouchLeftKey = '5';
 
         if (m_OpenXr == true)
         {
@@ -82,6 +84,7 @@ public:
             UEVR_ActionHandle BTouchLeft = m_VR->get_action_handle("/actions/default/in/BButtonTouchLeft");
             UEVR_ActionHandle ATouchRight = m_VR->get_action_handle("/actions/default/in/AButtonTouchRight");
             UEVR_ActionHandle BTouchRight = m_VR->get_action_handle("/actions/default/in/BButtonTouchRight");
+            UEVR_ActionHandle ThumbrestTouchLeft = m_VR->get_action_handle("/actions/default/in/ThumbrestTouchLeft");
 
             // Map ATouchLeft
             if (m_VR->is_action_active_any_joystick(ATouchLeft))
@@ -165,6 +168,27 @@ public:
             {
                 send_key(BTouchRightKey, KEYUP);
                 BTouchRightDown = false;
+            }
+
+            // Map ThumbrestTouchLeft
+            if (m_VR->is_action_active_any_joystick(ThumbrestTouchLeft))
+            {
+                if (ThumbrestTouchLeftDown == false)
+                {
+                    send_key(ThumbrestTouchLeftKey, KEYDOWN);
+                    ThumbrestTouchLeftDown = true;
+                    m_VR->trigger_haptic_vibration(
+                        0.0f,
+                        0.05f,
+                        1.0f,
+                        1000.0f,
+                        m_VR->is_action_active(ThumbrestTouchLeft, RightController) ? RightController : LeftController);
+                }
+            }
+            else if (ThumbrestTouchLeftDown == true)
+            {
+                send_key(ThumbrestTouchLeftKey, KEYUP);
+                ThumbrestTouchLeftDown = false;
             }
         }
     }
